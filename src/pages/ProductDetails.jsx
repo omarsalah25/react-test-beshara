@@ -1,4 +1,4 @@
-import { Button, Carousel, ConfigProvider, Empty, Result, Spin } from "antd";
+import { Button, Carousel, ConfigProvider, Result, Spin } from "antd";
 import AuthLayout from "../layouts/AuthLayout";
 import { useEffect, useState } from "react";
 import axios from "axios";

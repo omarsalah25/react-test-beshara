@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom' // Imp
 import About from './pages/About'
 import ContactUs from './pages/ContactUs.jsx'
 import ProductDetails from './pages/ProductDetails.jsx'
-import Home from './pages/home.jsx'
+import Home from './pages/Home.jsx'
 
 
 
