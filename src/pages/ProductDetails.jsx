@@ -60,9 +60,9 @@ const ProductDetails = () => {
                     },
                 }}
             >
+                {/* Images Carousel */}
                 <div className="flex lg:flex-row flex-col p-5 w-full min-h-screen justify-around items-center ">
-                    {/* Product Image Carousel */}
-                    <div className=" w-fit max-w-96">
+                    <div className=" w-fit max-w-96 p-5">
                         <Carousel arrows infinite={true} draggable className="w-full h-full">
                             <img
                                 src={product.image}

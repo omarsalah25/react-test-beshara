@@ -6,6 +6,7 @@ import About from './pages/About'
 import ContactUs from './pages/ContactUs.jsx'
 import ProductDetails from './pages/ProductDetails.jsx'
 import Home from './pages/Home.jsx'
+import Cart from './pages/Cart.jsx'
 
 
 
@@ -16,6 +17,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<ContactUs />} />
+        <Route path="/cart" element={<Cart />} />
         <Route path="/product/:id" element={<ProductDetails />} />
       </Routes>
     </Router>

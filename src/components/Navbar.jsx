@@ -82,7 +82,7 @@ const Navbar = () => {
             <div className="flex items-center space-x-4">
                 <div className="flex items-center gap-2">
                     <Avatar size={32} className="mr-2" />
-                    <span className="text-black/70">Hello, </span>
+                    <span className="text-black/70 capitalize">Hello, john doe </span>
                 </div>
 
                 <Link to="/cart" className="flex items-center text-black font-semibold hover:text-black/60 transition duration-300 capitalize">

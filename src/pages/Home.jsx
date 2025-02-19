@@ -44,7 +44,7 @@ const Home = () => {
     <AuthLayout>
       <div className="w-full" style={{ padding: '20px' }}>
         <h1 className="text-2xl mb-4">Product Categories</h1>
-        {/*  */}
+        {/* accordion */}
         <Collapse
           accordion
           onChange={fetchProducts}
@@ -54,6 +54,7 @@ const Home = () => {
           {categories.map((category) => (
             <Panel className='capitalize' header={category} key={category}>
 
+              {/* products grid */}
               <div className='grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2   gap-4'>
                 {loading ? (
                   <Spin />
