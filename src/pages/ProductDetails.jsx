@@ -64,7 +64,6 @@ const ProductDetails = () => {
                     {/* Product Image Carousel */}
                     <div className=" w-fit max-w-96">
                         <Carousel arrows infinite={true} draggable className="w-full h-full">
-                            {/* Display product images dynamically */}
                             <img
                                 src={product.image}
                                 alt={`product-image-${product.image}`}
@@ -87,7 +86,6 @@ const ProductDetails = () => {
                             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded duration-300">Add to Cart</button>
 
                         </div>
-                        {/* Add any other product details */}
                     </div>
                 </div>
             </ConfigProvider>

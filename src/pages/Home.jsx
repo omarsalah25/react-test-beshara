@@ -44,7 +44,7 @@ const Home = () => {
     <AuthLayout>
       <div className="w-full" style={{ padding: '20px' }}>
         <h1 className="text-2xl mb-4">Product Categories</h1>
-
+        {/*  */}
         <Collapse
           accordion
           onChange={fetchProducts}
