@@ -7,6 +7,7 @@ import ContactUs from './pages/ContactUs.jsx'
 import ProductDetails from './pages/ProductDetails.jsx'
 import Home from './pages/Home.jsx'
 import Cart from './pages/Cart.jsx'
+import Register from './pages/Register.jsx'
 
 
 
@@ -14,6 +15,7 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Router>
       <Routes>
+        <Route path="/register" element={<Register />} />
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<ContactUs />} />
