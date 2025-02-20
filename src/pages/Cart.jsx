@@ -15,13 +15,14 @@ import {
 } from '@dnd-kit/sortable';
 import { SortableItem } from '../components/cart/SortableItem';
 import AuthLayout from '../layouts/AuthLayout';
-import { Empty } from 'antd';
+import { Empty, notification } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeItem } from '../redux/cartSlice';
 
 export default function Cart() {
     const cartItems = useSelector((state) => state.cart.items);
     const [items, setItems] = useState(cartItems);
+    const [api, contextHolder] = notification.useNotification();
 
     useEffect(() => {
         setItems(cartItems);
@@ -29,8 +30,14 @@ export default function Cart() {
     const dispatch = useDispatch();
 
     const handleRemoveItem = (id) => {
-        setItems((prevItems) => prevItems.filter(item => item.id !== id));
-        dispatch(removeItem({ id }));
+        try {
+            setItems((prevItems) => prevItems.filter(item => item.id !== id));
+            dispatch(removeItem({ id }));
+            api.warning({ message: 'Item has been removed ' });
+        } catch (error) {
+            api.error({ message: 'Failed to remove Item  ' });
+            console.error(error);
+        }
     };
 
     // Set up sensors for drag-and-drop interaction
@@ -66,6 +73,7 @@ export default function Cart() {
             collisionDetection={closestCenter}
             onDragEnd={handleDragEnd} // Handle when the drag ends
         >
+            {contextHolder}
             <AuthLayout>
                 <div className="flex flex-col gap-5 p-5">
                     <h2 className="text-4xl font-bold">Shopping Cart</h2>

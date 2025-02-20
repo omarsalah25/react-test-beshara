@@ -2,10 +2,12 @@ import { GripVertical, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import { addItem, updateQuantity } from "../../redux/cartSlice";
 import { useDispatch } from "react-redux";
+import { notification } from "antd";
 
 const CartItem = ({ id, name, price, description, image, onRemove, initialQuantity, listeners }) => {
     const [quantity, setQuantity] = useState(initialQuantity || 1);
     const dispatch = useDispatch();
+    const [api, contextHolder] = notification.useNotification();
 
     useEffect(() => {
         handleQuantity(quantity)
@@ -16,20 +18,35 @@ const CartItem = ({ id, name, price, description, image, onRemove, initialQuanti
             quantity, // Set quantity to 1 when adding an item to the cart
         };
         dispatch(updateQuantity(cartItem)); // Dispatch addItem action to Redux store
+
+
     };
     const handleIncrease = () => {
-        setQuantity(prevQuantity => prevQuantity + 1);
+        try {
+            setQuantity(prevQuantity => prevQuantity + 1);
+            api.info({ message: 'Item quantity added' });
+        } catch (error) {
+            api.error({ message: 'Failed to add Item quantity ' });
+            console.error(error);
+        }
     };
 
     const handleDecrease = () => {
         if (quantity > 1) {
-            setQuantity(prevQuantity => prevQuantity - 1);
+            try {
+                setQuantity(prevQuantity => prevQuantity - 1);
+                api.warning({ message: 'Item quantity decreaced' });
+            } catch (error) {
+                api.error({ message: 'Failed to decreace Item quantity ' });
+                console.error(error);
+            }
         }
 
     };
 
     return (
         <div className="flex lg:flex-row flex-col justify-between items-center gap-4 shadow-md p-5 rounded-lg ">
+            {contextHolder}
             <div className="flex lg:flex-row gap-5 flex-col items-center h-full">
                 <div className="cursor-move" {...listeners}>
                     <GripVertical />
