@@ -3,11 +3,14 @@ import AuthLayout from "../layouts/AuthLayout";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { addItem } from '../redux/cartSlice';
 
 const ProductDetails = () => {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchProductDetails = async () => {
@@ -34,7 +37,13 @@ const ProductDetails = () => {
             </AuthLayout>
         );
     }
-
+    const handleAddToCart = () => {
+        const cartItem = {
+            ...product,
+            quantity: 1, // Set quantity to 1 when adding an item to the cart
+        };
+        dispatch(addItem(cartItem)); // Dispatch addItem action to Redux store
+    };
 
     if (!product) {
         return (
@@ -83,7 +92,7 @@ const ProductDetails = () => {
                         <p className="text-lg mb-3">{product.description}</p>
                         <div className="flex justify-between w-full items-center">
                             <p className="text-xl font-bold mb-3">Price: ${product.price}</p>
-                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded duration-300">Add to Cart</button>
+                            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded duration-300" onClick={handleAddToCart}>Add to Cart</button>
 
                         </div>
                     </div>

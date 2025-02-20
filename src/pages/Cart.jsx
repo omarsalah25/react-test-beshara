@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     DndContext,
     closestCenter,
@@ -16,13 +16,22 @@ import {
 import { SortableItem } from '../components/cart/SortableItem';
 import AuthLayout from '../layouts/AuthLayout';
 import { Empty } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { removeItem } from '../redux/cartSlice';
 
 export default function Cart() {
-    const [items, setItems] = useState([
-        { id: 1, name: 'Fjallraven - ', price: 12.95, image: 'https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg', quantity: 1 },
-        { id: 2, name: 'Fjallraven - Foldsack No. 1 Backpack', price: 109.95, image: 'https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg', quantity: 1 },
-        { id: 3, name: 'Fjallraven -  No. 1 Backpack', price: 13.95, image: 'https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg', quantity: 1 },
-    ]);
+    const cartItems = useSelector((state) => state.cart.items);
+    const [items, setItems] = useState(cartItems);
+
+    useEffect(() => {
+        setItems(cartItems);
+    }, [cartItems]);
+    const dispatch = useDispatch();
+
+    const handleRemoveItem = (id) => {
+        setItems((prevItems) => prevItems.filter(item => item.id !== id));
+        dispatch(removeItem({ id }));
+    };
 
     // Set up sensors for drag-and-drop interaction
     const sensors = useSensors(
@@ -49,9 +58,7 @@ export default function Cart() {
     }
 
     // Handle removing an item from the cart
-    const handleRemoveItem = (id) => {
-        setItems((prevItems) => prevItems.filter(item => item.id !== id));
-    };
+
 
     return (
         <DndContext
@@ -73,10 +80,10 @@ export default function Cart() {
                                         <SortableItem
                                             key={item.id}
                                             id={item.id}
-                                            name={item.name}
+                                            name={item.title}
                                             price={item.price}
                                             image={item.image}
-                                            initialQuantity={item.quantity}
+                                            quantity={item.quantity}
                                             onRemove={handleRemoveItem}
                                         />
                                     ))}

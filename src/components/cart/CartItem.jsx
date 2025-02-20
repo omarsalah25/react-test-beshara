@@ -1,9 +1,22 @@
 import { GripVertical, Trash } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { addItem, updateQuantity } from "../../redux/cartSlice";
+import { useDispatch } from "react-redux";
 
-const CartItem = ({ id, name, price, description, image, onRemove, listeners }) => {
-    const [quantity, setQuantity] = useState(1);
+const CartItem = ({ id, name, price, description, image, onRemove, initialQuantity, listeners }) => {
+    const [quantity, setQuantity] = useState(initialQuantity || 1);
+    const dispatch = useDispatch();
 
+    useEffect(() => {
+        handleQuantity(quantity)
+    }, [quantity])
+    const handleQuantity = (quantity) => {
+        const cartItem = {
+            id,
+            quantity, // Set quantity to 1 when adding an item to the cart
+        };
+        dispatch(updateQuantity(cartItem)); // Dispatch addItem action to Redux store
+    };
     const handleIncrease = () => {
         setQuantity(prevQuantity => prevQuantity + 1);
     };
@@ -12,6 +25,7 @@ const CartItem = ({ id, name, price, description, image, onRemove, listeners }) 
         if (quantity > 1) {
             setQuantity(prevQuantity => prevQuantity - 1);
         }
+
     };
 
     return (

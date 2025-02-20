@@ -8,20 +8,31 @@ import ProductDetails from './pages/ProductDetails.jsx'
 import Home from './pages/Home.jsx'
 import Cart from './pages/Cart.jsx'
 import Register from './pages/Register.jsx'
+import { Provider } from 'react-redux'
+import { store, persistor } from './redux/store.js'
+import { PersistGate } from 'redux-persist/integration/react'
 
 
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+
     <Router>
-      <Routes>
-        <Route path="/register" element={<Register />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<ContactUs />} />
-        <Route path="/cart" element={<Cart />} />
-        <Route path="/product/:id" element={<ProductDetails />} />
-      </Routes>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
+
+          <Routes>
+            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<ContactUs />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/product/:id" element={<ProductDetails />} />
+          </Routes>
+        </PersistGate>
+
+      </Provider>
+
     </Router>
   </StrictMode>
 )
