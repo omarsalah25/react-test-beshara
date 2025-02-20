@@ -1,6 +1,6 @@
 import { GripVertical, Trash } from "lucide-react";
 import { useEffect, useState } from "react";
-import { addItem, updateQuantity } from "../../redux/cartSlice";
+import { updateQuantity } from "../../redux/cartSlice";
 import { useDispatch } from "react-redux";
 import { notification } from "antd";
 

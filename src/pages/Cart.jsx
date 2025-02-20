@@ -15,7 +15,7 @@ import {
 } from '@dnd-kit/sortable';
 import { SortableItem } from '../components/cart/SortableItem';
 import AuthLayout from '../layouts/AuthLayout';
-import { Button, Empty, notification, Result } from 'antd';
+import { Button, notification, Result } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeItem } from '../redux/cartSlice';
 import { ShoppingCart } from 'lucide-react';
@@ -23,12 +23,15 @@ import { Link } from 'react-router-dom';
 
 export default function Cart() {
     const cartItems = useSelector((state) => state.cart.items);
+    const user = useSelector((state) => state.user.user);
     const [items, setItems] = useState(cartItems);
     const [api, contextHolder] = notification.useNotification();
 
     useEffect(() => {
         setItems(cartItems);
     }, [cartItems]);
+
+
     const dispatch = useDispatch();
 
     const handleRemoveItem = (id) => {

@@ -1,11 +1,15 @@
 import { Button, Form, Input } from "antd"
 import GuestLayout from "../layouts/GuestLayout"
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/userSlice";
 
 const Register = () => {
     const [form] = Form.useForm();
+    const dispatch = useDispatch();
 
     const onFinish = (values) => {
-        console.log('Received values:', values);
+        dispatch(setUser(values));
+        // Save user data to Redux store
     }
 
     const onFinishFailed = (errorInfo) => {

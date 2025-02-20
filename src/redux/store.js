@@ -1,27 +1,34 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // Import default localStorage
-import cartReducer from './cartSlice'; // Assuming you have this reducer
+import storage from 'redux-persist/lib/storage';
+import cartReducer from './cartSlice';
+import userReducer from './userSlice';
 
-// Redux persist configuration
 const persistConfig = {
-    key: 'cart', // LocalStorage key
-    storage, // Use localStorage
-    whitelist: ['items'], // Persist only the `items` part of the state
+    key: 'cart',
+    storage,
+    whitelist: ['items'],
 };
 
-// Persisted reducer using redux-persist
-const persistedCartReducer = persistReducer(persistConfig, cartReducer);
+const persistUserConfig = {
+    key: 'user',
+    storage,
+    whitelist: ['user'],
+};
 
-// Redux store configuration
+
+const persistedCartReducer = persistReducer(persistConfig, cartReducer);
+const persistedUserReducer = persistReducer(persistUserConfig, userReducer);
+
 const store = configureStore({
     reducer: {
-        cart: persistedCartReducer, // Use the persisted reducer
+        cart: persistedCartReducer,
+        user: persistedUserReducer,
     },
 });
 
-// Create persistor object
+// Persistor instance
 const persistor = persistStore(store);
 
-// Export both store and persistor
+// Export store and persistor
 export { store, persistor };

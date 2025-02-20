@@ -3,11 +3,15 @@ import { Link } from 'react-router-dom';
 import { LogOut, ShoppingBasket, Menu, X } from 'lucide-react'; // Import X icon for close
 import { motion, AnimatePresence } from 'framer-motion'; // Import AnimatePresence
 import { Avatar } from 'antd';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../redux/userSlice';
+import { resetCart } from '../redux/cartSlice';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const cartItems = useSelector((state) => state.cart.items);
+    const user = useSelector((state) => state.user.user);
+    const dispatch = useDispatch();
     const [items, setItems] = useState(cartItems);
     useEffect(() => {
         setItems(cartItems);
@@ -15,7 +19,11 @@ const Navbar = () => {
     const isPathActive = (path) => {
         return window.location.pathname === path;
     }
-
+    const handleLogout = () => {
+        // Log out the user
+        dispatch(logout());
+        dispatch(resetCart())
+    }
     const linkVariants = {
         initial: { width: 0 },
         animate: { width: '100%' },
@@ -87,7 +95,8 @@ const Navbar = () => {
             <div className="flex items-center space-x-4">
                 <div className="flex items-center gap-2">
                     <Avatar size={32} className="mr-2" />
-                    <span className="text-black/70 capitalize">Hello, john doe </span>
+                    <span className="text-black/70 capitalize">Hello, {user.firstName} {user.lastName
+                    } </span>
                 </div>
 
                 <Link to="/cart" className="flex items-center text-black relative font-semibold hover:text-black/60 transition duration-300 capitalize">
@@ -102,7 +111,7 @@ const Navbar = () => {
                 </Link>
 
                 <button className="bg-red-500 px-4 py-2 rounded-lg text-white font-semibold hover:bg-red-600 transition duration-300">
-                    <LogOut className='text-white' size={24} />
+                    <LogOut onClick={handleLogout} className='text-white' size={24} />
                 </button>
             </div>
 
