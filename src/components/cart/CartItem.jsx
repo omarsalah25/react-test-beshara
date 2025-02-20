@@ -24,9 +24,9 @@ const CartItem = ({ id, name, price, description, image, onRemove, initialQuanti
     const handleIncrease = () => {
         try {
             setQuantity(prevQuantity => prevQuantity + 1);
-            api.info({ message: 'Item quantity added' });
+            api.info({ message: 'Item quantity added', placement: 'bottomRight' });
         } catch (error) {
-            api.error({ message: 'Failed to add Item quantity ' });
+            api.error({ message: 'Failed to add Item quantity ', placement: 'bottomRight' });
             console.error(error);
         }
     };
@@ -35,9 +35,9 @@ const CartItem = ({ id, name, price, description, image, onRemove, initialQuanti
         if (quantity > 1) {
             try {
                 setQuantity(prevQuantity => prevQuantity - 1);
-                api.warning({ message: 'Item quantity decreaced' });
+                api.warning({ message: 'Item quantity decreaced', placement: 'bottomRight' });
             } catch (error) {
-                api.error({ message: 'Failed to decreace Item quantity ' });
+                api.error({ message: 'Failed to decreace Item quantity ', placement: 'bottomRight' });
                 console.error(error);
             }
         }

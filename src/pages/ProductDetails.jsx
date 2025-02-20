@@ -52,10 +52,10 @@ const ProductDetails = () => {
             dispatch(addItem(cartItem));
 
             // Show success message using Ant Design message component
-            api.success({ message: 'Item added to cart' });
+            api.success({ message: 'Item added to cart', placement: 'bottomRight' });
         } catch (error) {
             // If something goes wrong, show an error message
-            api.error({ message: 'Failed to add item to cart' });
+            api.error({ message: 'Failed to add item to cart', placement: 'bottomRight' });
             console.error(error);
         }
     };

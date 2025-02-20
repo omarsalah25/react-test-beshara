@@ -15,9 +15,11 @@ import {
 } from '@dnd-kit/sortable';
 import { SortableItem } from '../components/cart/SortableItem';
 import AuthLayout from '../layouts/AuthLayout';
-import { Empty, notification } from 'antd';
+import { Button, Empty, notification, Result } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeItem } from '../redux/cartSlice';
+import { ShoppingCart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function Cart() {
     const cartItems = useSelector((state) => state.cart.items);
@@ -33,9 +35,9 @@ export default function Cart() {
         try {
             setItems((prevItems) => prevItems.filter(item => item.id !== id));
             dispatch(removeItem({ id }));
-            api.warning({ message: 'Item has been removed ' });
+            api.warning({ message: 'Item has been removed ', placement: 'bottomRight' });
         } catch (error) {
-            api.error({ message: 'Failed to remove Item  ' });
+            api.error({ message: 'Failed to remove Item  ', placement: 'bottomRight' });
             console.error(error);
         }
     };
@@ -71,13 +73,18 @@ export default function Cart() {
         <DndContext
             sensors={sensors}
             collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd} // Handle when the drag ends
+            onDragEnd={handleDragEnd}
         >
             {contextHolder}
             <AuthLayout>
                 <div className="flex flex-col gap-5 p-5">
                     <h2 className="text-4xl font-bold">Shopping Cart</h2>
-                    {items.length === 0 ? (<Empty description={'No Items Added'} />) : (
+                    {items.length === 0 ? (<Result
+                        className='flex flex-col items-center'
+                        icon={<ShoppingCart className='size-42' />}
+                        title="ohh, you need to add items to cart!"
+                        extra={<Link to="/"><Button variant="solid">Go to Products</Button></Link>}
+                    />) : (
                         <div className="grid lg:grid-cols-3 grid-cols-1 gap-5">
                             <div className="lg:col-span-2">
                                 <SortableContext

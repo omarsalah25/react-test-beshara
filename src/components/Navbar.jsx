@@ -1,12 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { LogOut, ShoppingBasket, Menu, X } from 'lucide-react'; // Import X icon for close
 import { motion, AnimatePresence } from 'framer-motion'; // Import AnimatePresence
 import { Avatar } from 'antd';
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+    const cartItems = useSelector((state) => state.cart.items);
+    const [items, setItems] = useState(cartItems);
+    useEffect(() => {
+        setItems(cartItems);
+    }, [cartItems]);
     const isPathActive = (path) => {
         return window.location.pathname === path;
     }
@@ -85,8 +90,15 @@ const Navbar = () => {
                     <span className="text-black/70 capitalize">Hello, john doe </span>
                 </div>
 
-                <Link to="/cart" className="flex items-center text-black font-semibold hover:text-black/60 transition duration-300 capitalize">
+                <Link to="/cart" className="flex items-center text-black relative font-semibold hover:text-black/60 transition duration-300 capitalize">
                     <ShoppingBasket size={24} />
+
+                    {items.reduce((total, item) => total + item.quantity, 0) > 0 && (
+                        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold px-1 rounded-full">
+                            {items.reduce((total, item) => total + item.quantity, 0)}
+                        </span>
+                    )}
+
                 </Link>
 
                 <button className="bg-red-500 px-4 py-2 rounded-lg text-white font-semibold hover:bg-red-600 transition duration-300">
